@@ -1,0 +1,337 @@
+import React, { useState, useEffect } from 'react';
+import { 
+  Linkedin, 
+  Mail, 
+  Code2, 
+  Layout, 
+  Server, 
+  Smartphone, 
+  Menu, 
+  X, 
+  ChevronRight, 
+  Figma, 
+  Calendar,
+  Phone
+} from 'lucide-react';
+
+// --- Components ---
+
+const Navbar = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navLinks = [
+    { name: 'Tentang', href: '#about' },
+    { name: 'Proyek', href: '#projects' },
+    { name: 'Kontak', href: '#contact' },
+  ];
+
+  return (
+    <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/90 backdrop-blur-md py-4 shadow-sm' : 'bg-transparent py-6'}`}>
+      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+        <a href="#" className="text-2xl font-black tracking-tight text-[#333333]">
+          PORT<span className="text-[#FF6B00]">FOLIO</span>
+        </a>
+
+        {/* Desktop Links */}
+        <div className="hidden md:flex gap-8 items-center">
+          {navLinks.map((link) => (
+            <a 
+              key={link.name} 
+              href={link.href} 
+              className="text-sm font-semibold text-[#333333] hover:text-[#FF6B00] transition-colors uppercase tracking-[0.15em]"
+            >
+              {link.name}
+            </a>
+          ))}
+          <button className="bg-[#FF6B00] text-white px-6 py-2 rounded-full font-bold hover:bg-[#E66000] transition-all transform hover:scale-105 active:scale-95 text-sm shadow-lg shadow-[#FF6B00]/20">
+            RESUME
+          </button>
+        </div>
+
+        {/* Mobile Toggle */}
+        <button className="md:hidden text-[#333333]" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          {isMenuOpen ? <X /> : <Menu />}
+        </button>
+      </div>
+
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="md:hidden absolute top-full left-0 w-full bg-white border-b border-gray-100 p-6 flex flex-col gap-4 animate-in slide-in-from-top duration-300">
+          {navLinks.map((link) => (
+            <a 
+              key={link.name} 
+              href={link.href} 
+              className="text-lg font-bold text-[#333333]"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {link.name}
+            </a>
+          ))}
+          <button className="bg-[#FF6B00] text-white py-3 rounded-lg font-bold">
+            UNDUH RESUME
+          </button>
+        </div>
+      )}
+    </nav>
+  );
+};
+
+const Hero = () => {
+  return (
+    <section className="relative min-h-screen flex items-center pt-20 overflow-hidden bg-[#F9F9F9]">
+      {/* Geometric Accents */}
+      <div className="absolute top-20 right-[-5%] w-96 h-96 bg-[#FF6B00]/5 rounded-full blur-3xl" />
+      <div className="absolute bottom-10 left-[-5%] w-72 h-72 bg-[#333333]/5 rounded-full blur-2xl" />
+      
+      <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-10">
+        <div className="space-y-8">
+          <div className="inline-block bg-[#FF6B00]/10 text-[#FF6B00] px-4 py-1 rounded-lg text-xs font-black tracking-widest uppercase">
+            Tersedia untuk Magang
+          </div>
+          <h1 className="text-5xl lg:text-8xl font-black text-[#333333] leading-[0.95] tracking-tight">
+            Web Dev <br /> 
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF6B00] to-[#F57C00]">
+              & Student.
+            </span>
+          </h1>
+          <p className="text-lg md:text-xl text-gray-600 max-w-lg leading-relaxed font-medium">
+            Siswa SMK Telkom Sidoarjo yang passionate dalam pengembangan web dan mobile. Selalu bersemangat untuk belajar teknologi baru dan menciptakan solusi inovatif melalui kode.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-4 pt-4">
+            <a 
+              href="#projects" 
+              className="bg-[#FF6B00] text-white px-8 py-5 rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-[#E66000] transition-all shadow-xl shadow-[#FF6B00]/20 text-lg"
+            >
+              Lihat Karya <ChevronRight size={22} />
+            </a>
+          </div>
+        </div>
+
+        <div className="relative hidden md:block">
+          {/* Main Visual Frame */}
+          <div className="relative z-10 bg-white p-6 rounded-[3rem] shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-700 border border-gray-100">
+             <div className="bg-[#333333] aspect-square rounded-[2rem] overflow-hidden flex flex-col items-center justify-center p-8 text-center">
+                <div className="mb-6 bg-[#FF6B00]/10 p-6 rounded-3xl">
+                  <Code2 size={64} className="text-[#FF6B00]" />
+                </div>
+                <h4 className="text-white text-2xl font-black mb-2">Build.</h4>
+                <p className="text-gray-400 font-mono text-xs tracking-tighter">const dev = new CreativeStudent();</p>
+             </div>
+          </div>
+          {/* Background Decorative Element */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[115%] h-[115%] border-[3px] border-dashed border-[#FF6B00]/10 rounded-full animate-spin-slow" />
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const About = () => {
+  return (
+    <section id="about" className="py-32 bg-white">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="grid md:grid-cols-2 gap-24 items-center">
+          <div className="relative">
+            <div className="absolute -top-10 -left-10 w-32 h-32 bg-[#FF6B00]/5 rounded-full z-0 animate-pulse" />
+            <h2 className="text-5xl font-black text-[#333333] mb-10 relative z-10 tracking-tight leading-tight">
+              Menyusun kode dengan <br/><span className="text-[#FF6B00]">presisi akademik.</span>
+            </h2>
+            <div className="space-y-6 text-gray-600 text-lg leading-relaxed font-medium">
+              <p>
+                Saya adalah siswa Teknik Komputer yang berdedikasi pada pengembangan web. Perjalanan saya dimulai dari halaman HTML sederhana hingga membangun aplikasi web interaktif yang kompleks.
+              </p>
+              <p>
+                Saya berkembang di titik temu antara <span className="text-[#FF6B00] font-bold">Presisi Frontend</span> dan <span className="text-[#333333] font-bold">Logika Backend</span>. Saya percaya desain yang baik bukan hanya tentang tampilan, tapi bagaimana fungsi tersebut memudahkan pengguna.
+              </p>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-2 gap-6">
+             <div className="bg-[#F9F9F9] p-8 rounded-[2.5rem] border border-gray-100 group hover:bg-white hover:shadow-xl transition-all duration-300">
+                <Layout className="text-[#FF6B00] mb-6 group-hover:scale-110 transition-transform" size={40} />
+                <h3 className="font-black text-[#333333] text-2xl mb-2">Frontend</h3>
+                <p className="text-sm text-gray-500 font-medium tracking-wide">React • Next.js • CSS</p>
+             </div>
+             <div className="bg-[#333333] p-8 rounded-[2.5rem] text-white transform translate-y-10 group hover:shadow-2xl transition-all duration-300">
+                <Server className="text-[#FF6B00] mb-6 group-hover:scale-110 transition-transform" size={40} />
+                <h3 className="font-black text-white text-2xl mb-2">Backend</h3>
+                <p className="text-sm text-gray-400 font-medium tracking-wide">Node.js • SQL • API</p>
+             </div>
+             <div className="bg-[#FF6B00] p-8 rounded-[2.5rem] text-white transform translate-y-10 group hover:shadow-2xl transition-all duration-300">
+                <Figma className="text-white mb-6 group-hover:scale-110 transition-transform" size={40} />
+                <h3 className="font-black text-white text-2xl mb-2">Design</h3>
+                <p className="text-sm text-orange-100 font-medium tracking-wide">UI/UX • Figma</p>
+             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const Projects = () => {
+  const projectList = [
+    {
+      date: "November 2025",
+      title: "Moodify",
+      desc: "Sebuah platform inovatif yang secara cerdas menampilkan rekomendasi musik yang disesuaikan dengan suasana hati (mood) yang diinput oleh pengguna, menciptakan pengalaman mendengarkan yang lebih personal."
+    },
+    {
+      date: "Februari - Mei 2025",
+      title: "Portal Sidoarjo",
+      desc: "Portal berita digital yang dirancang untuk efisiensi tinggi dalam pengelolaan konten, memberikan pengalaman membaca yang intuitif bagi masyarakat, serta memiliki arsitektur fleksibel untuk pengembangan fitur di masa depan."
+    }
+  ];
+
+  return (
+    <section id="projects" className="py-32 bg-[#F9F9F9]">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-2xl mb-24">
+          <h2 className="text-5xl font-black text-[#333333] mb-6 tracking-tight">Timeline Proyek</h2>
+          <p className="text-gray-500 text-xl font-medium leading-relaxed">
+            Rekam jejak kronologis evolusi teknis saya, berfokus pada penyelesaian masalah dan keputusan arsitektural.
+          </p>
+        </div>
+
+        <div className="relative space-y-16">
+          {/* Vertical Timeline Line */}
+          <div className="absolute left-0 md:left-1/2 top-4 bottom-4 w-px bg-gray-200 -translate-x-1/2 hidden md:block" />
+
+          {projectList.map((project, idx) => (
+            <div key={idx} className={`relative flex flex-col md:flex-row items-start md:items-center group ${idx % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
+              
+              {/* Timeline Node */}
+              <div className="absolute left-0 md:left-1/2 top-0 md:top-1/2 w-4 h-4 rounded-full bg-white border-4 border-[#FF6B00] -translate-x-1/2 -translate-y-1/2 z-10 hidden md:block shadow-[0_0_0_8px_rgba(255,107,0,0.1)] group-hover:scale-125 transition-transform duration-300" />
+
+              {/* Date Marker */}
+              <div className={`w-full md:w-1/2 mb-4 md:mb-0 ${idx % 2 === 0 ? 'md:pl-16' : 'md:pr-16 md:text-right'}`}>
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FF6B00]/10 text-[#FF6B00] font-black text-xs tracking-widest uppercase mb-4">
+                  <Calendar size={14} /> {project.date}
+                </div>
+              </div>
+
+              {/* Content Description */}
+              <div className={`w-full md:w-1/2 ${idx % 2 === 0 ? 'md:pr-16 md:text-right' : 'md:pl-16'}`}>
+                <h3 className="text-3xl font-black text-[#333333] mb-4 group-hover:text-[#FF6B00] transition-colors tracking-tight">
+                  {project.title}
+                </h3>
+                <p className="text-gray-500 text-lg font-medium leading-relaxed mb-2">
+                  {project.desc}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const Contact = () => {
+  return (
+    <section id="contact" className="py-32 bg-[#333333] text-white">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="flex flex-col items-center text-center space-y-12">
+          <div className="space-y-6 max-w-3xl">
+            <h2 className="text-5xl lg:text-7xl font-black tracking-tighter leading-[0.9]">Mari bangun <br/><span className="text-[#FF6B00]">teknologi masa depan</span> bersama.</h2>
+            <p className="text-gray-400 text-xl font-medium leading-relaxed">
+              Saya sedang mencari peluang baru dan kolaborasi. Jika Anda memiliki pertanyaan atau hanya ingin menyapa, hubungi saya langsung melalui detail di bawah ini.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 w-full max-w-4xl pt-8">
+            {/* Email Contact */}
+            <div className="bg-white/5 p-8 rounded-[2.5rem] border border-white/10 hover:border-[#FF6B00] transition-all group">
+              <div className="w-14 h-14 rounded-2xl bg-[#FF6B00]/10 flex items-center justify-center mb-6 mx-auto group-hover:bg-[#FF6B00] transition-all">
+                <Mail className="text-[#FF6B00] group-hover:text-white" size={24} />
+              </div>
+              <h3 className="text-xs font-black uppercase tracking-[0.2em] text-gray-400 mb-2">Email</h3>
+              <p className="text-lg font-bold">rintokhrisna1@gmail.com</p>
+            </div>
+
+            {/* Phone Contact */}
+            <div className="bg-white/5 p-8 rounded-[2.5rem] border border-white/10 hover:border-[#FF6B00] transition-all group">
+              <div className="w-14 h-14 rounded-2xl bg-[#FF6B00]/10 flex items-center justify-center mb-6 mx-auto group-hover:bg-[#FF6B00] transition-all">
+                <Phone className="text-[#FF6B00] group-hover:text-white" size={24} />
+              </div>
+              <h3 className="text-xs font-black uppercase tracking-[0.2em] text-gray-400 mb-2">Telepon / WA</h3>
+              <p className="text-lg font-bold">+62 857 7522 9603</p>
+            </div>
+
+            {/* LinkedIn Contact */}
+            <div className="bg-white/5 p-8 rounded-[2.5rem] border border-white/10 hover:border-[#FF6B00] transition-all group">
+              <div className="w-14 h-14 rounded-2xl bg-[#FF6B00]/10 flex items-center justify-center mb-6 mx-auto group-hover:bg-[#FF6B00] transition-all">
+                <Linkedin className="text-[#FF6B00] group-hover:text-white" size={24} />
+              </div>
+              <h3 className="text-xs font-black uppercase tracking-[0.2em] text-gray-400 mb-2">LinkedIn</h3>
+              <p className="text-lg font-bold tracking-tight">LinkedIn Profile</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const Footer = () => {
+  return (
+    <footer className="py-16 bg-[#333333] border-t border-white/5">
+      <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-10 text-center md:text-left">
+        <div className="text-center md:text-left w-full">
+          <p className="text-white text-2xl font-black tracking-tight mb-2">PORT<span className="text-[#FF6B00]">FOLIO</span></p>
+          <p className="text-gray-500 text-sm font-medium">Dibuat dengan Semangat, React, dan Tailwind CSS.</p>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+// --- Main App ---
+
+export default function App() {
+  return (
+    <div className="min-h-screen bg-[#F9F9F9] selection:bg-[#FF6B00]/30 selection:text-[#FF6B00]">
+      <Navbar />
+      <Hero />
+      <About />
+      <Projects />
+      <Contact />
+      <Footer />
+      
+      {/* Global CSS for Smooth Scrolling and Custom Fonts */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Outfit:wght@400;500;600;700;800&display=swap');
+        
+        html {
+          scroll-behavior: smooth;
+        }
+        
+        body {
+          font-family: 'Outfit', sans-serif;
+          -webkit-font-smoothing: antialiased;
+        }
+        
+        h1, h2, h3, h4, .font-heading {
+          font-family: 'Bricolage Grotesque', sans-serif;
+          letter-spacing: -0.02em;
+        }
+
+        @keyframes spin-slow {
+          from { transform: translate(-50%, -50%) rotate(0deg); }
+          to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        .animate-spin-slow {
+          animation: spin-slow 30s linear infinite;
+        }
+      `}} />
+    </div>
+  );
+}
